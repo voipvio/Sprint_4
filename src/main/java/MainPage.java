@@ -1,6 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import java.util.Objects;
 
 public class MainPage extends BasePage {
 
@@ -14,6 +14,8 @@ public class MainPage extends BasePage {
     private String accordionElementHeader = ".//div[@id = 'accordion__heading-%d']";
     // Описание элемента выпадающего списка
     private String accordionElementDescription = ".//div[@aria-labelledby = 'accordion__heading-%d']/p";
+    // Путь до описания элемента выпадающего списка
+    private By accordionDescriptionPath = By.xpath(".//div[@id = 'accordion__panel-" + accordionArrowIndex + "']/p");
     // Кнопка "Заказать" в заголовке страницы
     private By headerOrderButton = By.className("Button_Button__ra12g");
     // Кнопка "Заказать" на главной странице
@@ -39,13 +41,17 @@ public class MainPage extends BasePage {
     public String getAccordionDescription (int accordionArrowIndex) {
         return driver.findElement(By.xpath(String.format(accordionElementDescription, accordionArrowIndex))).getText();
     }
-    // Метод кликает на кнопку "Заказать"
-    public void clickOrderButton(By orderButton){
-        driver.findElement(orderButton).click();
+    // Метод возвращает путь до описания элемента выпадающего списка в зависимости от индекса
+    public By getAccordionDescriptionPath (int accordionArrowIndex) {
+        return accordionDescriptionPath = By.xpath(".//div[@id = 'accordion__panel-" + accordionArrowIndex + "']/p");
+    }
+    // Метод кликает на кнопку "Заказать" в заголовке или теле страницы, в зависимости от параметра
+    public void clickOrderButton(String orderButtonPlace){
+        if (Objects.equals(orderButtonPlace, "Кнопка Заказать в заголовке")) {
+            driver.findElement(headerOrderButton).click();
+        } else {
+            driver.findElement(homeOrderButton).click();
+        }
     }
 
 }
-
-
-
-

@@ -3,7 +3,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 public class ScooterOrderPage extends BasePage {
-
+    // Заголовок страницы "Когда привезти самокат?"
+    private By orderPageHeader = By.xpath(".//input[@placeholder = '* Когда привезти самокат']");
     // Поле "Имя"
     private By firstNameField = By.xpath(".//input[@placeholder = '* Имя']");
     // Поле "фамилия"
@@ -41,6 +42,10 @@ public class ScooterOrderPage extends BasePage {
         super(driver);
     }
 
+    // Метод возвращает заголовок страницы "Когда привезти самокат?"
+    public By getOrderPageHeader () {
+        return orderPageHeader;
+    }
     // Метод вводит значение в поле "Имя"
     public void fillFirstNameField (String firstName){
         driver.findElement(firstNameField).sendKeys(firstName);

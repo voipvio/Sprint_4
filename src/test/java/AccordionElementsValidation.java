@@ -1,9 +1,7 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.junit.Test;
 import org.junit.After;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,11 +38,9 @@ public class AccordionElementsValidation {
     }
 
     @Test
-    public void AccordionElementsValidation(){
+    public void accordionElementsValidation(){
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
         driver.get("https://qa-scooter.praktikum-services.ru/");
 
         MainPage objMainPage = new MainPage(driver);
@@ -53,7 +49,7 @@ public class AccordionElementsValidation {
         objMainPage.clickAccordionArrow(accordionArrowIndex);
 
         new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(".//div[@id = 'accordion__panel-" + accordionArrowIndex + "']/p"))));
+                .until(ExpectedConditions.visibilityOf(driver.findElement(objMainPage.getAccordionDescriptionPath(accordionArrowIndex))));
 
         String actualHeader = objMainPage.getAccordionHeader(accordionArrowIndex);
         assertEquals(expectedHeader, actualHeader);

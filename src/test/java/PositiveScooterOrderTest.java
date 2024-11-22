@@ -3,7 +3,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.Test;
@@ -15,7 +14,7 @@ import java.time.Duration;
 public class PositiveScooterOrderTest {
 
     WebDriver driver;
-    By orderButton;
+    String orderButton;
     String firstName;
     String lastName;
     String address;
@@ -25,7 +24,7 @@ public class PositiveScooterOrderTest {
     String comment;
     String expectedOrderStatus;
 
-    public PositiveScooterOrderTest (By orderButton, String firstName, String lastName, String address, String metro, String phoneNumber, String whenToBring, String comment, String expectedOrderStatus){
+    public PositiveScooterOrderTest (String orderButton, String firstName, String lastName, String address, String metro, String phoneNumber, String whenToBring, String comment, String expectedOrderStatus){
         this.orderButton = orderButton;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,8 +40,8 @@ public class PositiveScooterOrderTest {
     @Parameterized.Parameters
     public static Object[][] testData() {
         return new Object[][]{
-                {By.className("Button_Button__ra12g"), "Глеб", "Ордеров", "Москва, ул. Большая Никитская, д. 18", "бульвар", "+375447769845", "29.11.2024", "Спасибо за такую классную возможность заказать самокат", "Заказ оформлен"},
-                {By.className("Button_Middle__1CSJM"), "Екатерина", "Назарова", "Москва, проспект Независимости, д. 168", "киевская", "+375336574846", "28.11.2024", "Нужно ли предоставить паспорт? Если да, позвоните мне", "Заказ оформлен"},
+                {"Кнопка Заказать в заголовке", "Глеб", "Ордеров", "Москва, ул. Большая Никитская, д. 18", "бульвар", "+375447769845", "29.11.2024", "Спасибо за такую классную возможность заказать самокат", "Заказ оформлен"},
+                {"Кнопка Заказать в теле страницы", "Екатерина", "Назарова", "Москва, проспект Независимости, д. 168", "киевская", "+375336574846", "28.11.2024", "Нужно ли предоставить паспорт? Если да, позвоните мне", "Заказ оформлен"},
         };
     }
 
@@ -64,7 +63,7 @@ public class PositiveScooterOrderTest {
         objScooterOrderPage.clickNextOrderPageButton();
 
         new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(".//input[@placeholder = '* Когда привезти самокат']"))));
+                .until(ExpectedConditions.visibilityOf(driver.findElement(objScooterOrderPage.getOrderPageHeader())));
 
         objScooterOrderPage.fillWhenToBringField(whenToBring);
         objScooterOrderPage.fillRentalPeriodField();
